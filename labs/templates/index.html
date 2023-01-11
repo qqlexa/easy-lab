@@ -1,0 +1,9 @@
+{% if latest_labs_list %}
+    <ul>
+    {% for laboratory in latest_labs_list %}
+        <li><a href="{% url 'detail' laboratory.id %}">{{ laboratory.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No labs are available.</p>
+{% endif %}

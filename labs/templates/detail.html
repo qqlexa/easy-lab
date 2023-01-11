@@ -1,0 +1,19 @@
+<h1>{{ laboratory.title }}</h1>
+Test-cases:
+<ul>
+{% for test_case in laboratory.testcase_set.all %}
+    <li>Description: {{ test_case.description }}</li>
+    <li>Input: {{ test_case.case_input }}</li>
+    <li>Output: {{ test_case.case_output }}</li>
+    <br>
+{% endfor %}
+</ul>
+<form action="{% url 'send' laboratory.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1>{{ laboratory.title }}</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <textarea id="code" name="code" cols="40" rows="5"></textarea>
+</fieldset>
+<input type="submit" value="Send">
+</form>

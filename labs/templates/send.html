@@ -1,0 +1,8 @@
+<h1>{{ laboratory.title }}</h1>
+<ul>
+{% for test_name, test_result in result.items %}
+    <li>{{ test_name }} status: {{ test_result }}</li>
+{% endfor %}
+</ul>
+<br>
+<a href="{% url 'detail' laboratory.id %}">Back to {{ laboratory.title }}</a>
