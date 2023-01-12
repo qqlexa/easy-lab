@@ -1,9 +1,18 @@
-{% if latest_labs_list %}
-    <ul>
-    {% for laboratory in latest_labs_list %}
-        <li><a href="{% url 'detail' laboratory.id %}">{{ laboratory.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No labs are available.</p>
-{% endif %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+
+<div class="container">
+    {% if latest_labs_list %}
+    <h1 class="page-title">Here you can see list of available labs</h1>
+    <ol class="labs-list">
+        {% for laboratory in latest_labs_list %}
+        <div class="labs-list__item">
+            <li><a href="{% url 'detail' laboratory.id %}">{{laboratory.title}}</a></li>
+        </div>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p class="no-labs-template">No labs are available.</p>
+    {% endif %}
+</div>

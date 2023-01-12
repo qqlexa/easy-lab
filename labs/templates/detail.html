@@ -1,19 +1,48 @@
-<h1>{{ laboratory.title }}</h1>
-Test-cases:
-<ul>
-{% for test_case in laboratory.testcase_set.all %}
-    <li>Description: {{ test_case.description }}</li>
-    <li>Input: {{ test_case.case_input }}</li>
-    <li>Output: {{ test_case.case_output }}</li>
-    <br>
-{% endfor %}
-</ul>
-<form action="{% url 'send' laboratory.id %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <legend><h1>{{ laboratory.title }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <textarea id="code" name="code" cols="40" rows="5"></textarea>
-</fieldset>
-<input type="submit" value="Send">
-</form>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles/detail.css' %}">
+<div class="container">
+
+    <h1 class="page-title">{{ laboratory.title }}</h1>
+    <!-- TODO add lab description (task description)-->
+    <p class="lab-description">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi doloremque odio repudiandae, modi, ipsum
+        molestiae animi numquam provident corrupti maxime magni, officia consequatur accusantium nisi! Amet quis
+        reprehenderit atque debitis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque, quos
+        consequatur exercitationem odio, ipsam dolore maiores suscipit est ut praesentium dolor delectus nulla saepe
+        natus corporis harum excepturi maxime iusto?</p>
+    <div class="lab-info-container">
+        <div class="lab-info">
+
+            <div class="test-cases">
+                <h4>Test-cases:</h4>
+                {% for test_case in laboratory.testcase_set.all %}
+                <div class="test-case-info">
+                    <div class="test-case-info__description">
+                        <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
+                        <p>{{ test_case.description }}</p>
+                    </div>
+                    <div class="test-case-info__data">
+                        <p><b>Input:</b> {{ test_case.case_input }}</p>|
+                        <p><b>Output:</b> {{ test_case.case_output }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <form action="{% url 'send' laboratory.id %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>
+                    <h1>{{ laboratory.title }}</h1>
+                </legend>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
+            </fieldset>
+            <input class="submit-btn" type="submit" value="Send">
+        </form>
+    </div>
+
+
+</div>
