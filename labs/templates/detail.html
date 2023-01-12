@@ -1,8 +1,12 @@
+{% extends "template.html" %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'styles/detail.css' %}">
-<div class="container">
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/detail.css' %}">
+{% endblock %}
 
+
+{% block content %}
     <h1 class="page-title">{{ laboratory.title }}</h1>
     <!-- TODO add lab description (task description)-->
     <p class="lab-description">
@@ -43,6 +47,4 @@
             <input class="submit-btn" type="submit" value="Send">
         </form>
     </div>
-
-
-</div>
+{% endblock %}

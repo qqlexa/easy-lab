@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #F9F1E7;
+  counter-reset: li;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 70px auto;
+}
+
+.page-title {
+  font-size: 30px;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 0.05em;
+}
