@@ -28,8 +28,7 @@ textarea {
 
 textarea:focus {
     background: #FFFFFF;
-    outline-width: 0;
-    
+    outline-width: 0;   
 }
 
 .submit-btn {
@@ -82,4 +81,12 @@ fieldset {
 .test-case-info__icon{
   width: 60px;
   height: 40px;
+}
+
+.language-select {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin-top: -30px;
+  margin-right: 10px;
 }

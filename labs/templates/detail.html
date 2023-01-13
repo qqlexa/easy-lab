@@ -2,49 +2,56 @@
 {% load static %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'styles/detail.css' %}">
+<link rel="stylesheet" href="{% static 'styles/detail.css' %}">
 {% endblock %}
 
 
 {% block content %}
-    <h1 class="page-title">{{ laboratory.title }}</h1>
-    <!-- TODO add lab description (task description)-->
-    <p class="lab-description">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi doloremque odio repudiandae, modi, ipsum
-        molestiae animi numquam provident corrupti maxime magni, officia consequatur accusantium nisi! Amet quis
-        reprehenderit atque debitis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque, quos
-        consequatur exercitationem odio, ipsam dolore maiores suscipit est ut praesentium dolor delectus nulla saepe
-        natus corporis harum excepturi maxime iusto?</p>
-    <div class="lab-info-container">
-        <div class="lab-info">
+<h1 class="page-title">{{ laboratory.title }}</h1>
+<!-- TODO add lab description (task description)-->
+<p class="lab-description">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi doloremque odio repudiandae, modi, ipsum
+    molestiae animi numquam provident corrupti maxime magni, officia consequatur accusantium nisi! Amet quis
+    reprehenderit atque debitis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque, quos
+    consequatur exercitationem odio, ipsam dolore maiores suscipit est ut praesentium dolor delectus nulla saepe
+    natus corporis harum excepturi maxime iusto?</p>
+<div class="lab-info-container">
+    <div class="lab-info">
 
-            <div class="test-cases">
-                <h4>Test-cases:</h4>
-                {% for test_case in laboratory.testcase_set.all %}
-                <div class="test-case-info">
-                    <div class="test-case-info__description">
-                        <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
-                        <p>{{ test_case.description }}</p>
-                    </div>
-                    <div class="test-case-info__data">
-                        <p><b>Input:</b> {{ test_case.case_input }}</p>|
-                        <p><b>Output:</b> {{ test_case.case_output }}</p>
-                    </div>
+        <div class="test-cases">
+            <h4>Test-cases:</h4>
+            {% for test_case in laboratory.testcase_set.all %}
+            <div class="test-case-info">
+                <div class="test-case-info__description">
+                    <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
+                    <p>{{ test_case.description }}</p>
                 </div>
-                {% endfor %}
+                <div class="test-case-info__data">
+                    <p><b>Input:</b> {{ test_case.case_input }}</p>|
+                    <p><b>Output:</b> {{ test_case.case_output }}</p>
+                </div>
             </div>
+            {% endfor %}
         </div>
-
-        <form action="{% url 'send' laboratory.id %}" method="post">
-            {% csrf_token %}
-            <fieldset>
-                <legend>
-                    <h1>{{ laboratory.title }}</h1>
-                </legend>
-                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
-            </fieldset>
-            <input class="submit-btn" type="submit" value="Send">
-        </form>
     </div>
+
+    <form action="{% url 'send' laboratory.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h1>{{ laboratory.title }}</h1>
+            </legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <div class="language-select">
+                <select>
+                    <option value="Python">Python</option>
+                    <option value="JS">JavaScript</option>
+                    <option value="C++">C++</option>
+                </select>
+            </div>
+            <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
+        </fieldset>
+        <input class="submit-btn" type="submit" value="Send">
+    </form>
+</div>
 {% endblock %}
