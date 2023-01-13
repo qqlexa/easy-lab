@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <form action="{% url 'send' laboratory.id %}" method="post">
+    <form id="code-form" action="{% url 'send' laboratory.id %}" method="post">
         {% csrf_token %}
         <fieldset>
             <legend>
@@ -61,4 +61,11 @@
         </ul>
     {% endif %}
 </div>
+<script>
+    const form = document.getElementById('code-form');
+    form.addEventListener('submit', (e) => {
+        // e.preventDefault();
+        document.body.classList.add('is-loading');
+    })
+</script>
 {% endblock %}
