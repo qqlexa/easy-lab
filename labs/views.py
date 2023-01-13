@@ -13,9 +13,13 @@ def index(request):
     context = {'latest_labs_list': latest_labs_list}
     return render(request, 'index.html', context)
 
-def detail(request, laboratory_id):
-    laboratory = get_object_or_404(Laboratory, pk=laboratory_id)
-    return render(request, 'detail.html', {'laboratory': laboratory})
+async def detail(request, laboratory_id):
+    laboratory = await get_laboratory(laboratory_id)
+    test_cases = await get_laboratory_test_cases(laboratory)
+    if request.method == 'GET':
+        return render(request, 'detail.html', {'laboratory': laboratory, 'test_cases': test_cases})
+    else:
+        return await send(request, laboratory, test_cases)
 
 @sync_to_async
 def get_laboratory(laboratory_id: int) -> Laboratory:
@@ -27,16 +31,13 @@ def get_laboratory_test_cases(laboratory: Laboratory) -> list[TestCase]:
     return list(laboratory.testcase_set.all())
 
 
-async def send(request, laboratory_id):
-    laboratory = await get_laboratory(laboratory_id)
-
+async def send(request, laboratory, test_cases):
     user_code = request.POST.get('code', None)
     if user_code is None:
         raise Http404('User code cannot be empty.')
 
     result = {}
     input_coroutines = []
-    test_cases = await get_laboratory_test_cases(laboratory)
     for i, test_case in enumerate(test_cases):
         file_content = f'{test_case.case_input}\n\n{user_code}'
         # await
@@ -50,7 +51,7 @@ async def send(request, laboratory_id):
         result[f'Test {counter}'] = test_case.case_output == system_output
         counter += 1
 
-    return render(request, 'send.html', {'laboratory': laboratory, 'result': result})
+    return render(request, 'detail.html', {'laboratory': laboratory, 'result': result, 'test_cases': test_cases})
 
 
 async def get_file_output(time, file_content):

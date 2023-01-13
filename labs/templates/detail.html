@@ -20,7 +20,7 @@
 
             <div class="test-cases">
                 <h4>Test-cases:</h4>
-                {% for test_case in laboratory.testcase_set.all %}
+                {% for test_case in test_cases %}
                 <div class="test-case-info">
                     <div class="test-case-info__description">
                         <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
@@ -46,5 +46,14 @@
             </fieldset>
             <input class="submit-btn" type="submit" value="Send">
         </form>
+
+        {% if result %}
+            <ul>
+            {% for test_name, test_result in result.items %}
+                <li>{{ test_name }} status: {{ test_result }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
     </div>
 {% endblock %}

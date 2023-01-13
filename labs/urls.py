@@ -8,5 +8,5 @@ urlpatterns = [
     # ex: /labs/5/
     path('<int:laboratory_id>/', views.detail, name='detail'),
     # ex: /labs/5/send/
-    path('<int:laboratory_id>/send/', views.send, name='send'),
+    path('<int:laboratory_id>', views.detail, name='send'),
 ]
