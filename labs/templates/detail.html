@@ -47,7 +47,11 @@
                 <!-- TODO beautify select -->
                 <select name="language">
                     {% for language in languages %}
-                        <option value={{ language.title }}>{{ language.description }}</option>
+                        {% if language_title == language.title %}
+                            <option value={{ language.title }} selected>{{ language.description }}</option>
+                        {% else %}
+                            <option value={{ language.title }}>{{ language.description }}</option>
+                        {% endif %}
                     {% endfor %}
 
                 </select>

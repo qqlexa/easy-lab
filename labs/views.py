@@ -53,21 +53,19 @@ def get_laboratory_available_languages(laboratory: Laboratory) -> list[Laborator
 
 @sync_to_async
 def get_languages(laboratory_available_languages: list[LaboratoryInLanguage]) -> list[Language]:
-    return [lil.language for lil in laboratory_available_languages]
+    return list({lil.language for lil in laboratory_available_languages})
 
 
 @sync_to_async
 def get_language_from_laboratory_languages(
         lab_in_languages: list[LaboratoryInLanguage], language_title: str
 ) -> tuple[LaboratoryInLanguage, Language]:
-    lab_in_language = [lil for lil in lab_in_languages if lil.language.title == language_title]
-    if len(lab_in_language) == 0:
+    lab_in_languages = [lil for lil in lab_in_languages if lil.language.title == language_title]
+    if len(lab_in_languages) == 0:
         raise Http404('Language cannot be empty.')
-    elif len(lab_in_language) > 1:
-        raise Http404('Language should be only one.')
-    lab_in_language = lab_in_language[0]
-    language = lab_in_language.language
-    return lab_in_language, language
+
+    language = lab_in_languages[0].language  # any
+    return lab_in_languages, language
 
 
 async def send(request, laboratory, test_cases, lab_in_languages, languages):
@@ -79,12 +77,12 @@ async def send(request, laboratory, test_cases, lab_in_languages, languages):
     if language_title is None:
         raise Http404('Code language cannot be empty.')
 
-    lab_in_language, language = await get_language_from_laboratory_languages(
+    labs_in_languages, language = await get_language_from_laboratory_languages(
         lab_in_languages, language_title
     )
 
     input_coroutines = []
-    for i, test_case in enumerate(test_cases):
+    for i, lab_in_language in enumerate(labs_in_languages):
         file_content = f'{lab_in_language.code}\n\n{user_code}'
         input_coroutines.append(
             get_file_output(i, file_content, language)
@@ -108,12 +106,21 @@ async def send(request, laboratory, test_cases, lab_in_languages, languages):
             'languages': languages,
             'lab_in_languages': lab_in_languages,
             'user_code': user_code,
+            'language_title': language_title,
         }
     )
 
 
 async def get_file_output(time, file_content: str, language: Language):
     await asyncio.sleep(0.3 * time)
+    if language.title == 'cpp':
+        file_content = (
+            '#include <iostream>\n'
+            'using namespace std;\n'
+            'int main() {\n'
+            f'{file_content}\n'
+            'return 0;}'
+        )
 
     client = piston_rspy.Client()
     response = await client.execute(
