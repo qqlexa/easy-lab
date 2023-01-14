@@ -20,9 +20,13 @@ async def detail(request, laboratory_id):
     languages = await get_languages(lab_in_languages)
 
     if request.method == 'GET':
+        test_cases_result = []
+        for test_case in test_cases:
+            result = (test_case, None)
+            test_cases_result.append(result)
         return render(
             request, 'detail.html',
-            {'laboratory': laboratory, 'test_cases': test_cases, 'languages': languages}
+            {'laboratory': laboratory, 'test_cases': test_cases, 'languages': languages, 'test_cases_result': test_cases_result}
         )
     else:
         return await send(request, laboratory, test_cases, lab_in_languages, languages)
@@ -90,18 +94,17 @@ async def send(request, laboratory, test_cases, lab_in_languages, languages):
     system_cases = await asyncio.gather(*input_coroutines, return_exceptions=True)
     print(datetime.datetime.now())
 
-    counter = 1
-    result = {}
+    test_cases_result = []
     for test_case, system_output in zip(test_cases, system_cases):
-        result[f'Test {counter}'] = test_case.expected_output == system_output
-        counter += 1
+        result = (test_case, test_case.case_output == system_output)
+        test_cases_result.append(result)
 
     return render(
         request, 'detail.html',
         {
             'laboratory': laboratory,
-            'result': result,
             'test_cases': test_cases,
+            'test_cases_result': test_cases_result,
             'languages': languages,
             'lab_in_languages': lab_in_languages
         }

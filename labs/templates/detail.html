@@ -19,16 +19,24 @@
     <div class="lab-info">
         <div class="test-cases">
             <h4>Test-cases:</h4>
-            {% for test_case in test_cases %}
-            <div class="test-case-info">
+            {% for test_case, result in test_cases_result %}
+            <div class="test-case-info 
+            {% if result == True %} test-case-passed {% endif %}
+            {% if result == False %} test-case-failed {% endif %}">
                 <div class="test-case-info__description">
+                    <!-- {% if result %} 
+                    test-case-passed 
+                    {% endif %} -->
+                    <!-- TODO add nice icons & styling -->
                     <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
                     <p>{{ test_case.description }}</p>
                 </div>
+                <li> {{ result }}</li>
                 <div class="test-case-info__data">
                     <p><b>Input:</b> {{ test_case.case_input }}</p>|
                     <p><b>Output:</b> {{ test_case.case_output }}</p>
                 </div>
+
             </div>
             {% endfor %}
         </div>
@@ -42,24 +50,18 @@
             </legend>
             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
             <div class="language-select">
+                <!-- TODO beautify select -->
                 <select name="language">
                     {% for language in languages %}
                         <option value={{ language.title }}>{{ language.description }}</option>
                     {% endfor %}
+
                 </select>
             </div>
             <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
         </fieldset>
         <input class="submit-btn" type="submit" value="Send">
     </form>
-
-    {% if result %}
-        <ul>
-        {% for test_name, test_result in result.items %}
-            <li>{{ test_name }} status: {{ test_result }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
 </div>
 <script>
     const form = document.getElementById('code-form');
