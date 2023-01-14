@@ -42,10 +42,10 @@
             </legend>
             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
             <div class="language-select">
-                <select>
-                    <option value="Python">Python</option>
-                    <option value="JS">JavaScript</option>
-                    <option value="C++">C++</option>
+                <select name="language">
+                    {% for language in languages %}
+                        <option value={{ language.title }}>{{ language.description }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
