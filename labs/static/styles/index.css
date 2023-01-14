@@ -5,6 +5,7 @@
 }
 
 .labs-list__item {
+  display: block;
   margin: 40px auto;
   font-size: 28px;
   color: white;
@@ -13,11 +14,6 @@
   border-radius: 10px;
   background-color: #5f935a;
   padding: 20px 30px;
-}
-
-.labs-list__item li a {
-  text-decoration: none;
-  color: inherit;
 }
 
 .labs-list__item:hover {
