@@ -96,7 +96,7 @@ async def send(request, laboratory, test_cases, lab_in_languages, languages):
 
     test_cases_result = []
     for test_case, system_output in zip(test_cases, system_cases):
-        result = (test_case, test_case.case_output == system_output)
+        result = (test_case, test_case.expected_output == system_output)
         test_cases_result.append(result)
 
     return render(
@@ -106,7 +106,8 @@ async def send(request, laboratory, test_cases, lab_in_languages, languages):
             'test_cases': test_cases,
             'test_cases_result': test_cases_result,
             'languages': languages,
-            'lab_in_languages': lab_in_languages
+            'lab_in_languages': lab_in_languages,
+            'user_code': user_code,
         }
     )
 

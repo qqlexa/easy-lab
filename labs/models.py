@@ -3,8 +3,8 @@ from django.db import models
 
 class Laboratory(models.Model):
     title = models.CharField(max_length=20)
-    # description = models.CharField(max_length=500)
-    # pub_date = models.DateTimeField('date published')
+    description = models.CharField(max_length=500)
+    pub_date = models.DateTimeField('date published')
 
 
 class Language(models.Model):

@@ -8,13 +8,7 @@
 
 {% block content %}
 <h1 class="page-title">{{ laboratory.title }}</h1>
-<!-- TODO add lab description (task description)-->
-<p class="lab-description">
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi doloremque odio repudiandae, modi, ipsum
-    molestiae animi numquam provident corrupti maxime magni, officia consequatur accusantium nisi! Amet quis
-    reprehenderit atque debitis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque, quos
-    consequatur exercitationem odio, ipsam dolore maiores suscipit est ut praesentium dolor delectus nulla saepe
-    natus corporis harum excepturi maxime iusto?</p>
+<p class="lab-description">{{ laboratory.description }}</p>
 <div class="lab-info-container">
     <div class="lab-info">
         <div class="test-cases">
@@ -31,10 +25,10 @@
                     <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
                     <p>{{ test_case.description }}</p>
                 </div>
-                <li> {{ result }}</li>
+                {% if result is not None %}<p>Result: {{ result }} </p>{% endif %}
                 <div class="test-case-info__data">
-                    <p><b>Input:</b> {{ test_case.case_input }}</p>|
-                    <p><b>Output:</b> {{ test_case.case_output }}</p>
+                    <p><b>Input:</b> {{ test_case.description_input }}</p>|
+                    <p><b>Output:</b> {{ test_case.description_output }}</p>
                 </div>
 
             </div>
@@ -58,7 +52,7 @@
 
                 </select>
             </div>
-            <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20"></textarea>
+            <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20">{% if user_code %}{{ user_code }}{% endif %}</textarea>
         </fieldset>
         <input class="submit-btn" type="submit" value="Send">
     </form>
