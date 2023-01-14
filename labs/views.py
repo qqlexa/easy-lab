@@ -17,7 +17,14 @@ async def detail(request, laboratory_id):
     laboratory = await get_laboratory(laboratory_id)
     test_cases = await get_laboratory_test_cases(laboratory)
     if request.method == 'GET':
-        return render(request, 'detail.html', {'laboratory': laboratory, 'test_cases': test_cases})
+        test_cases_result = []
+        for test_case in test_cases:
+            result = (test_case, None)
+            test_cases_result.append(result)
+        return render(
+            request, 'detail.html',
+            {'laboratory': laboratory, 'test_cases': test_cases, 'test_cases_result': test_cases_result}
+        )
     else:
         return await send(request, laboratory, test_cases)
 
@@ -46,12 +53,12 @@ async def send(request, laboratory, test_cases):
     system_cases = await asyncio.gather(*input_coroutines, return_exceptions=True)
     print(datetime.datetime.now())
 
-    counter = 1
+    test_cases_result = []
     for test_case, system_output in zip(test_cases, system_cases):
-        result[f'Test {counter}'] = test_case.case_output == system_output
-        counter += 1
+        result = (test_case, test_case.case_output == system_output)
+        test_cases_result.append(result)
 
-    return render(request, 'detail.html', {'laboratory': laboratory, 'result': result, 'test_cases': test_cases})
+    return render(request, 'detail.html', {'laboratory': laboratory, 'test_cases': test_cases, 'test_cases_result': test_cases_result})
 
 
 async def get_file_output(time, file_content):

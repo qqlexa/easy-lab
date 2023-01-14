@@ -19,9 +19,14 @@ a {
   color: inherit;
 }
 
+/*if needed update this list to reset browser default styles*/
 li {
   margin: 0;
   padding: 0;
+}
+
+select {
+  cursor: pointer;
 }
 
 .container {
