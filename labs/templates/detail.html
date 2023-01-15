@@ -18,14 +18,18 @@
             {% if result == True %} test-case-passed {% endif %}
             {% if result == False %} test-case-failed {% endif %}">
                 <div class="test-case-info__description">
-                    <!-- {% if result %} 
-                    test-case-passed 
-                    {% endif %} -->
-                    <!-- TODO add nice icons & styling -->
-                    <img class="test-case-info__icon" src="{% static '/images/test-icon.png' %}" alt="Test icon">
+                    <!-- TODO refactor "if endif" approach-->
+                    {% if result == None %}
+                        <img class="test-case-info__icon" src="{% static '/images/neutral-icon.png' %}" alt="Test icon">
+                    {% endif %}
+                    {% if result %}
+                        <img class="test-case-info__icon" src="{% static '/images/tick-icon.png' %}" alt="Tick icon">
+                    {% endif %}
+                    {% if result == False %}
+                        <img class="test-case-info__icon" src="{% static '/images/cross-icon.png' %}" alt="Cross icon">
+                    {% endif %}
                     <p>{{ test_case.description }}</p>
                 </div>
-                {% if result is not None %}<p>Result: {{ result }} </p>{% endif %}
                 <div class="test-case-info__data">
                     <p><b>Input:</b> {{ test_case.description_input }}</p>|
                     <p><b>Output:</b> {{ test_case.description_output }}</p>
@@ -63,9 +67,11 @@
 </div>
 <script>
     const form = document.getElementById('code-form');
+    const bodyClasses = document.body.classList;
     form.addEventListener('submit', (e) => {
         // e.preventDefault();
-        document.body.classList.add('is-loading');
+        bodyClasses.add('is-loading');
     })
+    setTimeout(() => bodyClasses.remove('is-loading'), 5000)
 </script>
 {% endblock %}
