@@ -13,7 +13,9 @@ class Language(models.Model):
 
 
 class TestCase(models.Model):
-    laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE)  # 1 laboratory -> * laboratory tests
+    laboratory = models.ForeignKey(
+        Laboratory, on_delete=models.CASCADE
+    )  # 1 laboratory -> * laboratory tests
 
     description = models.CharField(max_length=200)  # description about this test
     description_input = models.CharField(max_length=1000)  # example input
@@ -22,9 +24,15 @@ class TestCase(models.Model):
 
 
 class LaboratoryInLanguage(models.Model):
-    laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE)  # 1 laboratory -> * laboratory in language
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)  # 1 language -> * laboratory in language
-    test_case = models.ForeignKey(TestCase, on_delete=models.CASCADE)  # 1 test_case -> * laboratory in language
+    laboratory = models.ForeignKey(
+        Laboratory, on_delete=models.CASCADE
+    )  # 1 laboratory -> * laboratory in language
+    language = models.ForeignKey(
+        Language, on_delete=models.CASCADE
+    )  # 1 language -> * laboratory in language
+    test_case = models.ForeignKey(
+        TestCase, on_delete=models.CASCADE
+    )  # 1 test_case -> * laboratory in language
 
     code = models.CharField(max_length=200)  # code that runs before user code
 
