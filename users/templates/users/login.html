@@ -1,4 +1,4 @@
-
+{% extends "template.html"%}
 
 {% block content %}
 
@@ -6,13 +6,20 @@
 
 <!--Login-->
 <div class="container py-5">
-  <h1>Login</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ login_form|crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
-  </form>
-  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+  <h1 class="py-1 text-center">Login</h1>
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ login_form|crispy }}
+        <div class="pt-3 text-center">
+          <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+      </form>
+      <a href="/register"> <p class="text-center">Don't have an account? Create.</p></a>
+    </div>
+  
 </div>
 
 {% endblock %}

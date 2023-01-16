@@ -9,7 +9,6 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% if user.student %}
-            <p>STUDENT</p>
             {% if latest_labs_list %}
                 <h1 class="page-title">Here you can see list of available labs</h1>
                 <ol class="labs-list">
@@ -25,16 +24,5 @@
         {% else %}
             <p>TEACHER</p>
         {% endif %}
-        <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Welcome, {{user.username}}</a>
-        </li>
-
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-        </li>
     {% endif %}
 {% endblock %}
