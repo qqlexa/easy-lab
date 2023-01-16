@@ -1,0 +1,77 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/detail.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<h1 class="page-title">{{ laboratory.title }}</h1>
+<p class="lab-description">{{ laboratory.description }}</p>
+<div class="lab-info-container">
+    <div class="lab-info">
+        <div class="test-cases">
+            <h4>Test-cases:</h4>
+            {% for test_case, result in test_cases_result %}
+            <div class="test-case-info 
+            {% if result == True %} test-case-passed {% endif %}
+            {% if result == False %} test-case-failed {% endif %}">
+                <div class="test-case-info__description">
+                    <!-- TODO refactor "if endif" approach-->
+                    {% if result == None %}
+                        <img class="test-case-info__icon" src="{% static '/images/neutral-icon.png' %}" alt="Test icon">
+                    {% endif %}
+                    {% if result %}
+                        <img class="test-case-info__icon" src="{% static '/images/tick-icon.png' %}" alt="Tick icon">
+                    {% endif %}
+                    {% if result == False %}
+                        <img class="test-case-info__icon" src="{% static '/images/cross-icon.png' %}" alt="Cross icon">
+                    {% endif %}
+                    <p>{{ test_case.description }}</p>
+                </div>
+                <div class="test-case-info__data">
+                    <p><b>Input:</b> {{ test_case.description_input }}</p>|
+                    <p><b>Output:</b> {{ test_case.description_output }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form id="code-form" action="{% url 'send' laboratory.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h1>{{ laboratory.title }}</h1>
+            </legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <div class="language-select">
+                <!-- TODO beautify select -->
+                <select name="language">
+                    {% for language in languages %}
+                        {% if language_title == language.title %}
+                            <option value={{ language.title }} selected>{{ language.description }}</option>
+                        {% else %}
+                            <option value={{ language.title }}>{{ language.description }}</option>
+                        {% endif %}
+                    {% endfor %}
+
+                </select>
+            </div>
+            <textarea placeholder="Type your code here" id="code" name="code" cols="40" rows="20">{% if user_code %}{{ user_code }}{% endif %}</textarea>
+        </fieldset>
+        <input class="submit-btn" type="submit" value="Send">
+    </form>
+</div>
+<script>
+    const form = document.getElementById('code-form');
+    const bodyClasses = document.body.classList;
+    form.addEventListener('submit', (e) => {
+        // e.preventDefault();
+        bodyClasses.add('is-loading');
+    })
+    setTimeout(() => bodyClasses.remove('is-loading'), 5000)
+</script>
+{% endblock %}

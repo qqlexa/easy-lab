@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% load static %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    {% if latest_labs_list %}
+        <h1 class="page-title">Here you can see list of available labs</h1>
+        <ol class="labs-list">
+            {% for laboratory in latest_labs_list %}
+            <a class="labs-list__item" href="{% url 'detail' laboratory.id %}">
+                    <li>{{laboratory.title}}</li>
+            </a>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p class="no-labs-template">No labs are available.</p>
+    {% endif %}
+{% endblock %}

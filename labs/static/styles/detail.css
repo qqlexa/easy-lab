@@ -1,0 +1,100 @@
+.lab-info-container {
+  margin: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lab-info-container h4, .lab-description {
+  text-align: center;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+
+textarea {
+  margin: 10px;
+  width: 500px;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  border-style: 1px solid;
+  color: #555555;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 10px;
+  transition: background-color ease 0.2s;
+}
+
+
+textarea:focus {
+    background: #FFFFFF;
+    outline-width: 0;   
+}
+
+.submit-btn {
+  margin-top: 25px;
+  width: 140px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background: #005613;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+form {
+  text-align: center;
+}
+
+fieldset {
+  border: 2px solid #005613;
+  border-radius: 6px;
+}
+
+.test-case-info {
+  width: 100%;
+  min-height: 40px;
+  margin: 40px 0px;
+  padding: 0 15px;
+  background: #cccccc;
+  border-radius: 10px;
+  color: black;
+}
+
+.test-case-passed {
+  background: #1ace41;
+}
+
+.test-case-failed {
+  background: red;
+}
+.test-case-info__description, .test-case-info__data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5px;
+  gap: 5px;
+}
+
+.test-case-info__description{
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+/*TODO beautify icon*/
+.test-case-info__icon{
+  width: 40px;
+  height: 40px;
+}
+
+.language-select {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin-top: -30px;
+  margin-right: 10px;
+}
+
