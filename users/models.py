@@ -26,7 +26,6 @@ class Group(models.Model):
 
 
 class Student(CastomUser):
-    # name = models.CharField(max_length=30)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     class Meta:
