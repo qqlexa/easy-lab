@@ -1,11 +1,14 @@
 from django.db import models
 
+from users.models import Subject
+
 
 class Laboratory(models.Model):
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=500)
     pub_date = models.DateTimeField('date published')
-
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE
+    )  # 1 subject -> * laboratory
 
 class Language(models.Model):
     title = models.CharField(max_length=30, primary_key=True)

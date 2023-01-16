@@ -29,15 +29,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'labs.apps.LabsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
+    'labs.apps.LabsConfig',
     'crispy_forms',
-    'users',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
