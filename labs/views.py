@@ -21,7 +21,9 @@ async def detail(request, laboratory_id):
     test_cases = await get_laboratory_test_cases(laboratory)
     lab_in_languages = await get_laboratory_available_languages(laboratory)
     languages = await get_languages(lab_in_languages)
-
+    student = await get_user_student(request.user)
+    teacher = await get_user_teacher(request.user)
+    is_authenticated = await get_is_authenticated(request.user)
     if request.method == 'GET':
         test_cases_result = []
         for test_case in test_cases:
@@ -35,6 +37,9 @@ async def detail(request, laboratory_id):
                 'test_cases': test_cases,
                 'languages': languages,
                 'test_cases_result': test_cases_result,
+                'student': student,
+                'teacher': teacher,
+                'is_authenticated': is_authenticated
             },
         )
     else:
@@ -81,6 +86,23 @@ def get_language_from_laboratory_languages(
     language = lab_in_languages[0].language  # any
     return lab_in_languages, language
 
+@sync_to_async
+def get_user_student(user):
+    try:
+        return user.student
+    except:
+        return None
+
+@sync_to_async
+def get_user_teacher(user):
+    try:
+        return user.teacher
+    except:
+        return None
+
+@sync_to_async
+def get_is_authenticated(user):
+    return user.is_authenticated 
 
 async def send(request, laboratory, test_cases, lab_in_languages, languages):
     user_code = request.POST.get('code', None)

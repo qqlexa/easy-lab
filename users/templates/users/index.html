@@ -10,8 +10,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      {% if user.is_authenticated %}
-          {% if user.student %}
+      {% if is_authenticated %}
+          {% if student %}
             <p>STUDENT</p>
           {% else %}
             <p>TEACHER</p>
