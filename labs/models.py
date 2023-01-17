@@ -8,7 +8,8 @@ class Laboratory(models.Model):
     description = models.CharField(max_length=500)
     pub_date = models.DateTimeField('date published')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE
-    )  # 1 subject -> * laboratory
+                                )  # 1 subject -> * laboratory
+
 
 class Language(models.Model):
     title = models.CharField(max_length=30, primary_key=True)
@@ -38,7 +39,6 @@ class LaboratoryInLanguage(models.Model):
     )  # 1 test_case -> * laboratory in language
 
     code = models.CharField(max_length=200)  # code that runs before user code
-
 
 # class UserAnswer(models.Model):
 #     laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE)  # 1 laboratory -> * user answers
