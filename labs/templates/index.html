@@ -7,16 +7,35 @@
 {% endblock %}
 
 {% block content %}
-    {% if latest_labs_list %}
-        <h1 class="page-title">Here you can see list of available labs</h1>
-        <ol class="labs-list">
-            {% for laboratory in latest_labs_list %}
-            <a class="labs-list__item" href="{% url 'detail' laboratory.id %}">
-                    <li>{{laboratory.title}}</li>
-            </a>
-            {% endfor %}
-        </ol>
+    {% if user.is_authenticated %}
+        {% if user.student %}
+            <p>STUDENT</p>
+            {% if latest_labs_list %}
+                <h1 class="page-title">Here you can see list of available labs</h1>
+                <ol class="labs-list">
+                {% for laboratory in latest_labs_list %}
+                    <a class="labs-list__item" href="{% url 'labs:detail' laboratory.id %}">
+                        <li>{{ laboratory.title }}</li>
+                    </a>
+                {% endfor %}
+                </ol>
+            {% else %}
+                <p class="no-labs-template">No labs are available.</p>
+            {% endif %}
         {% else %}
-        <p class="no-labs-template">No labs are available.</p>
+            <p>TEACHER</p>
+
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+        </li>
+
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+        </li>
     {% endif %}
 {% endblock %}

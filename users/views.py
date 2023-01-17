@@ -38,6 +38,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
+                return redirect("/labs")
                 return render(request=request, template_name="users/index.html", context={"login_form": form})
             else:
                 messages.error(request, "Invalid username or password.")

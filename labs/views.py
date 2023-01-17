@@ -8,6 +8,22 @@ from django.shortcuts import get_object_or_404, render
 import piston_rspy
 
 from .models import Laboratory, Language, LaboratoryInLanguage, TestCase
+from .forms import LaboratoryForm
+
+def show_lab(request):
+    pass
+def new_lab(request):
+    if request.method != 'POST':
+        # порожня форма
+        form = LaboratoryForm()
+    else:
+        form = LaboratoryForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+
+    # Показати порожню форму
+    context = {'form': form}
+    return render(request, 'new_lab.html', context)
 
 
 def index(request):
@@ -63,14 +79,14 @@ def get_laboratory_available_languages(laboratory: Laboratory) -> list[Laborator
 
 @sync_to_async
 def get_languages(
-    laboratory_available_languages: list[LaboratoryInLanguage],
+        laboratory_available_languages: list[LaboratoryInLanguage],
 ) -> list[Language]:
     return list({lil.language for lil in laboratory_available_languages})
 
 
 @sync_to_async
 def get_language_from_laboratory_languages(
-    lab_in_languages: list[LaboratoryInLanguage], language_title: str
+        lab_in_languages: list[LaboratoryInLanguage], language_title: str
 ) -> tuple[list[LaboratoryInLanguage], Language]:
     lab_in_languages = [
         lil for lil in lab_in_languages if lil.language.title == language_title
@@ -140,7 +156,7 @@ async def get_file_output(time, file_content: str, language: Language):
     response = await client.execute(
         piston_rspy.Executor()
         .set_language(language.title)
-        .add_file(piston_rspy.File(name='main', content=file_content,))
+        .add_file(piston_rspy.File(name='main', content=file_content, ))
     )
 
     user_output = response.run.output.removesuffix('\n')

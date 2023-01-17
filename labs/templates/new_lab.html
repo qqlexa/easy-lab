@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% load static %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<!--    {% if user.is_authenticated %}-->
+            <p>TEACHER</p>
+            <h1 class="page-title">Here you can add labs</h1>
+            <form action="{% url 'labs:new_lab' %}" method='post'>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button name="submit">Add Lab</button>
+            </form>
+<!--    {% endif %}-->
+{% endblock %}
